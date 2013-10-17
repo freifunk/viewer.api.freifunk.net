@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{community}}</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+
+  <h1>
+    <a href="{{url}}">{{community}}</a>
+  </h1>
+
+  <p>
+    <a hreF="index.html">zurück zur Übersicht</a>
+  </p>
+
+  <iframe
+    width="300" height="300" frameborder="50" scrolling="no"
+    marginheight="0" marginwidth="0"
+    src="http://www.openstreetmap.org/export/embed.html?bbox={{bbox}}&amp;layer=mapnik&amp;marker={{latlon[0]}},{{latlon[1]}}"
+    style="border: 1px solid black; float: right;">
+  </iframe>
+
+  <dl>
+  {%- for key, value in data.items() recursive %}
+    <dt>{{ key | capitalize }}</dt>
+    <dd>
+    {%- if value is dict %}
+      <dl>{{ loop(value.items())}}</dl>
+    {%- else %}
+      {{value}}
+    {%- endif %}
+    </dd>
+  {%- endfor %}
+  </dl>
+  </body>
+</html>

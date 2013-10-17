@@ -1,0 +1,30 @@
+body {
+  font-family: Helvetica Verdana Arial;
+  font-size: 12pt;
+  margin: 0 auto;
+  width: 960px;
+}
+
+dt {
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
+
+a, a:visited {
+  color: #db0166
+}
+
+#index ul, #index h1 {
+  text-align: center;
+}
+
+#index ul li {
+  display: inline-block;
+  width: 200px;
+  vertical-align: middle;
+  line-height: 100px;
+  text-align: center;
+}
