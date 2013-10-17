@@ -3,11 +3,12 @@
 		<title>Freifunk Communities</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="style.css">
+    <script src="sorttable.js"></script>
 	</head>
   <body>
     <div id="index">
       <h1>Freifunk Communities</h1>
-      <table>
+      <table class="sortable">
         <tr>
           <th>Region</th>
           <th>Firmware</th>
@@ -33,7 +34,7 @@
 
           <td>
             {% if 'techDetails' in data and 'routing' in data['techDetails']%}
-              {{ data['techDetails']['routing'] }}
+              {{ data['techDetails']['routing'] | upper }}
             {% endif %}
           </td>
 

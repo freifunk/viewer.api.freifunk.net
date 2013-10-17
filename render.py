@@ -95,8 +95,9 @@ if __name__ == "__main__":
     f.write(render_index('index.html', rendered))
 
   # style
-  shutil.copyfile(
-    os.path.join('templates/style.css'),
-    os.path.join(build_dir, 'style.css')
-  )
+  static_files = os.listdir('static')
+  for name in static_files:
+      path = os.path.join('static', name)
+      if (os.path.isfile(path)):
+        shutil.copyfile(path, os.path.join(build_dir, name))
 
