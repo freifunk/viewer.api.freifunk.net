@@ -17,7 +17,11 @@ a, a:visited {
   color: #db0166
 }
 
-#index ul, #index h1 {
+footer {
+  line-height: 2em;
+}
+
+#index ul, #index h1, footer {
   text-align: center;
 }
 

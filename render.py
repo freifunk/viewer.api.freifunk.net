@@ -7,6 +7,7 @@ import sys
 
 from jinja2 import Environment, FileSystemLoader
 from urllib2 import urlopen
+from datetime import datetime
 
 def is_dict(value):
     return isinstance(value, dict)
@@ -48,7 +49,10 @@ def render_community(template_path, url):
 
 def render_index(template_path, communities):
   template = env.get_template(template_path)
-  html = template.render(communities=communities)
+  html = template.render(
+    communities=communities,
+    now=datetime.now().ctime()
+  )
 
   return html.encode('utf-8')
 
