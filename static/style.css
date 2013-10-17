@@ -21,6 +21,11 @@ a, a:visited {
   color: #db0166
 }
 
+a.firmware, a.firmware:visited {
+  font-style: italic;
+  color: #000;
+}
+
 footer {
   line-height: 2em;
 }

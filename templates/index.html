@@ -23,7 +23,7 @@
           <td>
             {% if 'techDetails' in data and 'firmware' in data['techDetails'] %}
               {% if 'url' in data['techDetails']['firmware'] %}
-              <a href="{{data['techDetails']['firmware']['url']}}">
+              <a class="firmware" href="{{data['techDetails']['firmware']['url']}}">
                 {{data['techDetails']['firmware']['name']}}
               </a>
               {% else %}
