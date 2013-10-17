@@ -39,6 +39,7 @@ def render_community(template_path, data):
             url=url,
             latlon=latlon,
             bbox=gen_bbox(latlon),
+            now=datetime.now().ctime(),
             data=data)
 
   return html.encode('utf-8')
