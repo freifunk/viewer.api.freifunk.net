@@ -1,0 +1,9 @@
+Freifunk API Viewer
+===================
+
+  $ git clone https://github.com/cholin/ff-api-viewer
+  $ cd ff-api-viewer
+  $ python2 render.py [build_dir]
+  $ firefox build/index.html
+
+Live: http://cholin.spline.de/freifunk/api-viewer
