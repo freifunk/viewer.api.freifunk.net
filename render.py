@@ -13,8 +13,13 @@ def is_dict(value):
     return isinstance(value, dict)
 
 
+def is_list(value):
+    return isinstance(value, list)
+
+
 env = Environment(loader=FileSystemLoader('templates'))
 env.tests['dict'] = is_dict
+env.tests['list'] = is_list
 
 
 def gen_bbox(latlon):
@@ -26,10 +31,6 @@ def render_community(template_path, data):
   if 'name' in data:
     community = data['name']
     del data['name']
-
-  if 'url' in data:
-    url = data['url']
-    del data['url']
 
   latlon = (float(data['location']['lat']),float(data['location']['lon']))
 

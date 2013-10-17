@@ -8,7 +8,7 @@
 	<body>
 
   <h1>
-    <a href="{{url}}">{{community}}</a>
+    {{community}}
   </h1>
 
   <p>
@@ -28,8 +28,15 @@
     <dd>
     {%- if value is dict %}
       <dl>{{ loop(value.items())}}</dl>
+    {%- elif value is list %}
+      <dl>
+        {% set outer_loop = loop %}
+        {%- for e in value %}
+          {{ outer_loop(e.items()) }}
+        {%- endfor %}
+      </dl>
     {%- else %}
-      {{value}}
+      {{value|urlize}}
     {%- endif %}
     </dd>
   {%- endfor %}
