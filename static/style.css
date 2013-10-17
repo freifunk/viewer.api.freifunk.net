@@ -5,7 +5,12 @@ body {
   width: 960px;
 }
 
+dl {
+  margin-top: 0px;
+}
+
 dt {
+  margin-top: 10px;
   font-weight: bold;
 }
 
