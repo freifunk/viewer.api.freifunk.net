@@ -2,6 +2,8 @@
 
 import os
 import json
+import shutil
+import sys
 
 from jinja2 import Environment, FileSystemLoader
 from urllib2 import urlopen
@@ -52,6 +54,15 @@ def render_index(template_path, communities):
 
 
 if __name__ == "__main__":
+  build_dir = 'build'
+
+  if len(sys.argv) > 1:
+    build_dir = sys.argv[1]
+
+  if not os.path.isdir(build_dir):
+    os.makedirs(build_dir)
+
+  # communities
   url = 'https://raw.github.com/freifunk/api.freifunk.net/master/directory/directory.json'
   req = urlopen(url)
   communities = json.load(req)
@@ -59,7 +70,7 @@ if __name__ == "__main__":
 
   for name, url in communities.items():
     print("Rendering %s...\t" % name),
-    path = os.path.join('build', '%s.html' % name)
+    path = os.path.join(build_dir, '%s.html' % name)
     try:
       with open(path,'w') as f:
         f.write(render_community('community.html', url))
@@ -68,6 +79,13 @@ if __name__ == "__main__":
     except:
         print("error")
 
-  with open('build/index.html','w') as f:
+  # index
+  with open(os.path.join(build_dir, 'index.html'),'w') as f:
     f.write(render_index('index.html', sorted(rendered)))
+
+  # style
+  shutil.copyfile(
+    os.path.join('templates/style.css'),
+    os.path.join(build_dir, 'style.css')
+  )
 
