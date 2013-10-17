@@ -22,10 +22,7 @@ def gen_bbox(latlon):
     return '%2C'.join(map(str,bbox))
 
 
-def render_community(template_path, url):
-  req = urlopen(url)
-  data = json.load(req)
-
+def render_community(template_path, data):
   if 'name' in data:
     community = data['name']
     del data['name']
@@ -70,22 +67,32 @@ if __name__ == "__main__":
   url = 'https://raw.github.com/freifunk/api.freifunk.net/master/directory/directory.json'
   req = urlopen(url)
   communities = json.load(req)
-  rendered = []
+  entries = {}
+  rendered = {}
 
   for name, url in communities.items():
+    print("Collectin data for %s...\t" % name),
+    try:
+      req = urlopen(url)
+      entries[name] = json.load(req)
+      print("ok")
+    except:
+      print("error")
+
+  for name, data in entries.items():
     print("Rendering %s...\t" % name),
     path = os.path.join(build_dir, '%s.html' % name)
     try:
       with open(path,'w') as f:
-        f.write(render_community('community.html', url))
-        rendered.append(name)
+        f.write(render_community('community.html', data))
+        rendered[name] = data
         print("ok")
     except:
         print("error")
 
   # index
   with open(os.path.join(build_dir, 'index.html'),'w') as f:
-    f.write(render_index('index.html', sorted(rendered)))
+    f.write(render_index('index.html', rendered))
 
   # style
   shutil.copyfile(

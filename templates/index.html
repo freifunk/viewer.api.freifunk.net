@@ -7,13 +7,50 @@
   <body>
     <div id="index">
       <h1>Freifunk Communities</h1>
-      <ul>
-      {% for c in communities %}
-        <li>
-          <a href="{{c}}.html">{{c | capitalize}}</a>
-        </li>
+      <table>
+        <tr>
+          <th>Region</th>
+          <th>Firmware</th>
+          <th>Routing</th>
+          <th>Knoten</th>
+          <th>VPN</th>
+        </tr>
+      {% for name, data in communities | dictsort %}
+        <tr>
+          <td><a href="{{name}}.html">{{name | capitalize}}</a>
+
+          <td>
+            {% if 'techDetails' in data and 'firmware' in data['techDetails'] %}
+              {% if 'url' in data['techDetails']['firmware'] %}
+              <a href="{{data['techDetails']['firmware']['url']}}">
+                {{data['techDetails']['firmware']['name']}}
+              </a>
+              {% else %}
+                {{ data['techDetails']['firmware']['name'] }}
+              {% endif %}
+            {% endif %}
+          </td>
+
+          <td>
+            {% if 'techDetails' in data and 'routing' in data['techDetails']%}
+              {{ data['techDetails']['routing'] }}
+            {% endif %}
+          </td>
+
+          <td>
+            {% if 'state' in data and 'nodes' in data['state'] %}
+              {{ data['state']['nodes']}}
+            {% endif %}
+          </td>
+
+          <td>
+            {% if 'techDetails' in data and 'vpn' in data['techDetails']%}
+              {{ data['techDetails']['vpn'] }}
+            {% endif %}
+          </td>
+        </tr>
       {% endfor %}
-      </ul>
+      </table>
     </div>
 
     <footer>

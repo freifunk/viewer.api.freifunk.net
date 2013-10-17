@@ -13,6 +13,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 a, a:visited {
   color: #db0166
 }
@@ -31,4 +35,17 @@ footer {
   vertical-align: middle;
   line-height: 100px;
   text-align: center;
+}
+
+table {
+  text-align: center;
+  margin: 0 auto;
+}
+
+td {
+  padding: 10px;
+}
+
+th {
+  font-size: 1.1em;
 }
