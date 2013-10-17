@@ -11,6 +11,7 @@
       <table class="sortable">
         <tr>
           <th>Region</th>
+          <th>Website</th>
           <th>Firmware</th>
           <th>Routing</th>
           <th>Knoten</th>
@@ -21,9 +22,15 @@
           <td><a href="{{name}}.html">{{name | capitalize}}</a>
 
           <td>
+            {% if 'url' in data %}
+              <a class="italic" href="{{data['url']}}">{{data['url']}}</a>
+            {% endif %}
+          </td>
+
+          <td>
             {% if 'techDetails' in data and 'firmware' in data['techDetails'] %}
               {% if 'url' in data['techDetails']['firmware'] %}
-              <a class="firmware" href="{{data['techDetails']['firmware']['url']}}">
+              <a class="italic" href="{{data['techDetails']['firmware']['url']}}">
                 {{data['techDetails']['firmware']['name']}}
               </a>
               {% else %}

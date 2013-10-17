@@ -26,7 +26,7 @@ a, a:visited {
   color: #db0166
 }
 
-a.firmware, a.firmware:visited {
+a.italic, a.italic:visited {
   font-style: italic;
   color: #000;
 }
