@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>{{community}}</title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="style.css">
-	</head>
-	<body>
+{% extends "base.html" %}
 
+{% block title %}{{community}}{% endblock %}
+
+{% block content %}
   <h1>
     {{community}}
+    {% if url %}
+      - <small>{{ url | urlize }}</small>
+    {% endif %}
   </h1>
 
   <p>
@@ -41,8 +40,4 @@
     </dd>
   {%- endfor %}
   </dl>
-    <footer>
-      last update: {{now}}
-    </footer>
-  </body>
-</html>
+{% endblock %}

@@ -31,6 +31,10 @@ a.italic, a.italic:visited {
   color: #000;
 }
 
+small a {
+  font-size: 0.7em;
+}
+
 footer {
   line-height: 2em;
 }

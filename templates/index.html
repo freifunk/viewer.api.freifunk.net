@@ -1,73 +1,60 @@
-<html>
-	<head>
-		<title>Freifunk Communities</title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="style.css">
-    <script src="sorttable.js"></script>
-	</head>
-  <body>
-    <div id="index">
-      <h1>Freifunk Communities</h1>
-      <table class="sortable">
-        <tr>
-          <th>Region<span id="sorttable_sortfwdind">&nbsp;▾</span></th>
-          <th>Website</th>
-          <th>Firmware</th>
-          <th>Routing</th>
-          <th>Knoten</th>
-          <th>VPN</th>
-        </tr>
-      {% for name, data in communities | dictsort %}
-        <tr>
-          <td><a href="{{name}}.html">{{name | capitalize}}</a>
+{% extends "base.html" %}
 
-          <td>
-            {% if 'url' in data %}
-              <a class="italic" href="{{data['url']}}">{{data['url']}}</a>
+{% block title %}Freifunk API Viewer{% endblock %}
+
+{% block content %}
+  <div id="index">
+    <h1>Freifunk Communities</h1>
+    <table class="sortable">
+      <tr>
+        <th>Region<span id="sorttable_sortfwdind">&nbsp;▾</span></th>
+        <th>Website</th>
+        <th>Firmware</th>
+        <th>Routing</th>
+        <th>Knoten</th>
+        <th>VPN</th>
+      </tr>
+    {% for name, data in communities | dictsort %}
+      <tr>
+        <td><a href="{{name}}.html">{{name | capitalize}}</a>
+
+        <td>
+          {% if 'url' in data %}
+            <a class="italic" href="{{data['url']}}">{{data['url']}}</a>
+          {% endif %}
+        </td>
+
+        <td>
+          {% if 'techDetails' in data and 'firmware' in data['techDetails'] %}
+            {% if 'url' in data['techDetails']['firmware'] %}
+            <a class="italic" href="{{data['techDetails']['firmware']['url']}}">
+              {{data['techDetails']['firmware']['name']}}
+            </a>
+            {% else %}
+              {{ data['techDetails']['firmware']['name'] }}
             {% endif %}
-          </td>
+          {% endif %}
+        </td>
 
-          <td>
-            {% if 'techDetails' in data and 'firmware' in data['techDetails'] %}
-              {% if 'url' in data['techDetails']['firmware'] %}
-              <a class="italic" href="{{data['techDetails']['firmware']['url']}}">
-                {{data['techDetails']['firmware']['name']}}
-              </a>
-              {% else %}
-                {{ data['techDetails']['firmware']['name'] }}
-              {% endif %}
-            {% endif %}
-          </td>
+        <td>
+          {% if 'techDetails' in data and 'routing' in data['techDetails']%}
+            {{ data['techDetails']['routing'] | upper }}
+          {% endif %}
+        </td>
 
-          <td>
-            {% if 'techDetails' in data and 'routing' in data['techDetails']%}
-              {{ data['techDetails']['routing'] | upper }}
-            {% endif %}
-          </td>
+        <td>
+          {% if 'state' in data and 'nodes' in data['state'] %}
+            {{ data['state']['nodes']}}
+          {% endif %}
+        </td>
 
-          <td>
-            {% if 'state' in data and 'nodes' in data['state'] %}
-              {{ data['state']['nodes']}}
-            {% endif %}
-          </td>
-
-          <td>
-            {% if 'techDetails' in data and 'vpn' in data['techDetails']%}
-              {{ data['techDetails']['vpn'] }}
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
-      </table>
-    </div>
-
-    <footer>
-      want to improve it? checkout
-      <a href="https://github.com/cholin/ff-api-viewer">ff-api-viewer</a>
-      on github
-      <br />
-      last update: {{now}}
-    </footer>
-
-  </body>
-</html>
+        <td>
+          {% if 'techDetails' in data and 'vpn' in data['techDetails']%}
+            {{ data['techDetails']['vpn'] }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="sorttable.js"></script>
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+
+    <footer>
+      want to improve it? checkout
+      <a href="https://github.com/cholin/ff-api-viewer">ff-api-viewer</a>
+      on github
+      <br />
+      page generated: {{now}}
+    </footer>
+
+  </body>
+
+</html>

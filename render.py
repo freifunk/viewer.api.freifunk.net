@@ -28,9 +28,26 @@ def gen_bbox(latlon):
 
 
 def render_community(template_path, data):
-  if 'name' in data:
+  # extract community name
+  try:
     community = data['name']
     del data['name']
+  except:
+    pass
+
+  # extract url
+  try:
+    url = data['url']
+    del data['url']
+  except:
+    pass
+
+  # convert timestamp into human readable date form
+  try:
+    d = datetime.fromtimestamp(float(data['state']['lastchange']))
+    data['state']['lastchange'] = d.ctime()
+  except:
+    pass
 
   latlon = (float(data['location']['lat']),float(data['location']['lon']))
 
@@ -66,23 +83,15 @@ if __name__ == "__main__":
     os.makedirs(build_dir)
 
   # communities
-  url = 'https://raw.github.com/freifunk/api.freifunk.net/master/directory/directory.json'
+  url = 'http://weimarnetz.de/ffmap/ffSummarizedDir.json'
   req = urlopen(url)
   communities = json.load(req)
   entries = {}
   rendered = {}
 
-  for name, url in communities.items():
-    print("Collectin data for %s...\t" % name),
-    try:
-      req = urlopen(url)
-      entries[name] = json.load(req)
-      print("ok")
-    except:
-      print("error")
-
-  for name, data in entries.items():
-    print("Rendering %s...\t" % name),
+  print("Rendering communities")
+  for name, data in communities.items():
+    print("\t* %s...\t" % name),
     path = os.path.join(build_dir, '%s.html' % name)
     try:
       with open(path,'w') as f:
@@ -93,13 +102,20 @@ if __name__ == "__main__":
         print("error")
 
   # index
-  with open(os.path.join(build_dir, 'index.html'),'w') as f:
-    f.write(render_index('index.html', rendered))
+  print("\nRendering index page...\t"),
+  try:
+    index_path = os.path.join(build_dir, 'index.html')
+    with open(index_path,'w') as f:
+      f.write(render_index('index.html', rendered))
+      print(index_path)
+  except:
+    print("error")
 
   # style
+  print("\nCopying static files...")
   static_files = os.listdir('static')
   for name in static_files:
       path = os.path.join('static', name)
       if (os.path.isfile(path)):
         shutil.copyfile(path, os.path.join(build_dir, name))
-
+        print("\t* %s" % path)
