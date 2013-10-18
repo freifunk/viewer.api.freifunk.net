@@ -95,7 +95,7 @@ if __name__ == "__main__":
     path = os.path.join(build_dir, '%s.html' % name)
     try:
       with open(path,'w') as f:
-        f.write(render_community('community.html', data))
+        f.write(render_community('community.html', data.copy()))
         rendered[name] = data
         print("ok")
     except:
