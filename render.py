@@ -4,9 +4,9 @@ import os
 import json
 import shutil
 import sys
+import urllib2
 
 from jinja2 import Environment, FileSystemLoader
-from urllib2 import urlopen
 from datetime import datetime
 
 def is_dict(value):
@@ -83,9 +83,17 @@ if __name__ == "__main__":
     os.makedirs(build_dir)
 
   # communities
-  url = 'http://weimarnetz.de/ffmap/ffSummarizedDir.json'
-  req = urlopen(url)
-  communities = json.load(req)
+  try:
+    url = 'http://weimarnetz.de/ffmap/ffSummarizedDir.json'
+    req = urllib2.urlopen(url)
+    communities = json.load(req)
+  except urllib2.HTTPError:
+    sys.stderr.write("Error: JSON file could not be found (404)")
+  except:
+    sys.stderr.write("Invalid JSON file in %s" % url)
+    raise SystemExit
+
+
   entries = {}
   rendered = {}
 
@@ -115,7 +123,10 @@ if __name__ == "__main__":
   print("\nCopying static files...")
   static_files = os.listdir('static')
   for name in static_files:
-      path = os.path.join('static', name)
-      if (os.path.isfile(path)):
-        shutil.copyfile(path, os.path.join(build_dir, name))
-        print("\t* %s" % path)
+      src = os.path.join('static', name)
+      target = os.path.join(build_dir, name)
+      if (os.path.isfile(src)):
+        shutil.copyfile(src, target)
+        print("\t* %s" % target)
+
+  print("\nSuccessfully generated pages in: %s/" % build_dir)
