@@ -1,7 +1,13 @@
 body {
   font-family: Helvetica Verdana Arial;
   font-size: 12pt;
+}
+
+#index, #community {
   margin: 0 auto;
+}
+
+#community {
   width: 960px;
 }
 
@@ -62,4 +68,13 @@ td {
 
 th {
   font-size: 1.1em;
+}
+
+.centered {
+  text-align: center;
+}
+
+iframe {
+  margin-bottom: 30px;
+  border: 1px solid #000;
 }
