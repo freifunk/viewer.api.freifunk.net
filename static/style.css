@@ -1,6 +1,5 @@
 body {
-  font-family: Helvetica Verdana Arial;
-  font-size: 12pt;
+  font-size: 1em;
 }
 
 #index, #community {
@@ -64,6 +63,7 @@ table {
 
 td {
   padding: 10px;
+  border-top: 1px solid #ededed;
 }
 
 th {
