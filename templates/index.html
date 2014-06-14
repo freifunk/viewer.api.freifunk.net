@@ -12,7 +12,8 @@
 
     <table class="sortable">
       <tr>
-        <th>Region<span id="sorttable_sortfwdind">&nbsp;▾</span></th>
+        <th>Stadt/Region<span id="sorttable_sortfwdind">&nbsp;▾</span></th>
+        <th>Meta-Community</th>
         <th>Website</th>
         <th>Firmware</th>
         <th>Routing</th>
@@ -23,6 +24,10 @@
       <tr>
         <td><a href="{{name}}.html">{{name | capitalize}}</a>
 
+        <td>
+          {% if 'metacommunity' in data %}
+          	{{data['metacommunity']}}
+          {% endif %}
         <td>
           {% if 'url' in data %}
             <a class="italic" href="{{data['url']}}">{{data['url']}}</a>
