@@ -101,6 +101,7 @@ if __name__ == "__main__":
   # communities
   try:
     url = 'http://weimarnetz.de/ffmap/ffSummarizedDir.json'
+    url = 'http://freifunk.net/map/ffSummarizedDir.json'
     req = urllib2.urlopen(url)
     communities = json.load(req)
   except urllib2.HTTPError:
