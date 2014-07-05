@@ -43,7 +43,16 @@
 
         <td>
           {% if 'techDetails' in data and 'routing' in data['techDetails']%}
-            {{ data['techDetails']['routing'] | upper }}
+					{% if data['techDetails']['routing'] is list %}
+				      {%- for e in data['techDetails']['routing'] %}
+							{{  e }}
+							{% if not loop.last %}
+							    ,
+							{% endif %}
+						 {%- endfor %}
+					{% else %}
+							{{ data['techDetails']['routing'] | upper }}
+						{%- endif %}
           {% endif %}
         </td>
 

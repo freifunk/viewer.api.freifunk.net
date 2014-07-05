@@ -9,6 +9,9 @@ import urllib2
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 
+def __iter__(self):
+		return self.items.iteritems()
+
 def is_dict(value):
     return isinstance(value, dict)
 
@@ -52,13 +55,10 @@ def render_community(template_path, data):
   latlon = (float(data['location']['lat']),float(data['location']['lon']))
 
   template = env.get_template(template_path)
-  html = template.render(
-            community=community,
-            url=url,
-            latlon=latlon,
-            bbox=gen_bbox(latlon),
-            now=datetime.now().ctime(),
-            data=data)
+  for key, value in data.items():
+		print("key: ", key)
+
+  html = template.render(community=community, url=url, latlon=latlon, bbox=gen_bbox(latlon), now=datetime.now().ctime(), data=data)
 
   return html.encode('utf-8')
 
@@ -106,8 +106,8 @@ if __name__ == "__main__":
         f.write(render_community('community.html', data.copy()))
         rendered[name] = data
         print("ok")
-    except:
-        print("error")
+    except Exception as e:
+			print("error: ", str(e), data)
 
   # index
   print("\nRendering index page...\t"),
