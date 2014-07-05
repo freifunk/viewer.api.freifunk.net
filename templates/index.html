@@ -18,6 +18,7 @@
         <th>Routing</th>
         <th>Knoten</th>
         <th>VPN</th>
+        <th>Version</th>
       </tr>
     {% for name, data in communities | dictsort %}
       <tr>
@@ -65,6 +66,11 @@
         <td>
           {% if 'techDetails' in data and 'vpn' in data['techDetails']%}
             {{ data['techDetails']['vpn'] }}
+          {% endif %}
+        </td>
+        <td>
+          {% if 'api' in data %}
+            {{ data['api'] }}
           {% endif %}
         </td>
       </tr>
