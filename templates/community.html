@@ -22,24 +22,7 @@
       style="border: 1px solid black; float: right;">
     </iframe>
 
-    <dl>
-    {%- for key, value in data.items() recursive %}
-      <dt>{{ key | capitalize }}</dt>
-      <dd>
-      {%- if value is dict %}
-        <dl>{{ loop(value.items())}}</dl>
-      {%- elif value is list %}
-        <dl>
-          {% set outer_loop = loop %}
-          {%- for e in value %}
-            {{ outer_loop(e.items()) }}
-          {%- endfor %}
-        </dl>
-      {%- else %}
-        {{value|urlize}}
-      {%- endif %}
-      </dd>
-    {%- endfor %}
-    </dl>
+		{{data}}
+
   </div>
 {% endblock %}
