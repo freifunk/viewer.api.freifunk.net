@@ -78,3 +78,44 @@ iframe {
   margin-bottom: 30px;
   border: 1px solid #000;
 }
+
+
+text.invalid {
+  fill: #ff0000;
+}
+
+rect.invalid {
+  stroke: #ff0000;
+  fill: #ff0000;
+}
+
+rect.invalid.version {
+  fill:#ffffff;
+  stroke: #ff0000;
+}
+text.warning {
+  fill: orange;
+}
+
+rect.warning {
+  stroke: orange;
+  fill: orange;
+}
+
+rect.warning.version {
+  fill:#ffffff;
+  stroke: orange;
+}
+text.valid {
+  fill: #00aa00;
+}
+
+rect.valid {
+  stroke: #00aa00;
+  fill: #00aa00;
+}
+
+rect.valid.version {
+  fill:#ffffff;
+  stroke: #00aa00;
+}

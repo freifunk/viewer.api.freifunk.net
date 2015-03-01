@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os
+import glob
 import json
 import shutil
 import sys
 import urllib2
-
+import jsonschema
 from jinja2 import Environment, FileSystemLoader
 from jinja2.utils import urlize
 from datetime import datetime
@@ -60,6 +61,38 @@ def render_community(template_path, data):
 
   return html.encode('utf-8')
 
+def validate_community(specs, instance):
+  validation_result = {}
+  status_text = ''
+  status = ''
+  text_result = ''
+  try:
+    validator = jsonschema.validators.validator_for(specs[instance['api']]['schema']) 
+    validator.check_schema(specs[instance['api']]['schema'])
+    v = validator(specs[instance['api']]['schema'])
+    result = v.iter_errors(instance)
+    has_error = False
+    for error in sorted(result,key=str):
+      if not has_error:
+        text_result = '<ul>'
+      has_error = True
+      text_result = '%s<li>Error in %s: %s</li>' % (text_result, '->'.join(str(path) for path in error.path), error.message)
+
+    if has_error:
+      text_result = '%s</ul>' % (text_result)
+      status = 'invalid'
+      status_text = 'Invalid'
+    else:
+      status = 'valid'
+      status_text = 'Valid'
+
+    validation_result['status_text'] = status_text
+    validation_result['status'] = status
+    validation_result['result'] = text_result
+    return validation_result
+
+  except KeyError as e:
+    print('Invalid or unknown API version %s: %s' % (api_content['api'], url))
 
 def render_index(template_path, communities):
   template = env.get_template(template_path)
@@ -98,6 +131,14 @@ if __name__ == "__main__":
   if not os.path.isdir(build_dir):
     os.makedirs(build_dir)
 
+  # api specs
+  ff_api_specs = {}
+  spec_dir = './api.freifunk.net/specs/*.json'
+  spec_files = glob.glob(spec_dir)
+  for spec_file in spec_files:
+      spec_content = open(spec_file).read()
+      ff_api_specs[os.path.splitext(os.path.basename(spec_file))[0]] = json.loads(spec_content)
+
   # communities
   try:
     url = 'http://freifunk.net/map/ffSummarizedDir.json'
@@ -119,6 +160,7 @@ if __name__ == "__main__":
 		path = os.path.join(build_dir, '%s.html' % name)
 		try:
 			with open(path,'w') as f:
+                                data['validation'] = validate_community(ff_api_specs, data) 
 				f.write(render_community('community.html', data.copy()))
 				rendered[name] = data
 				print("ok")
