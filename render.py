@@ -53,11 +53,16 @@ def render_community(template_path, data):
 
   latlon = (float(data['location']['lat']),float(data['location']['lon']))
 
+  validation = data['validation']
+  del data['validation']
+
+  api = data['api']
+
   template = env.get_template(template_path)
 
   content = walk(data)
 
-  html = template.render(community=community, url=url, latlon=latlon, bbox=gen_bbox(latlon), now=datetime.now().ctime(), data=content)
+  html = template.render(community=community, url=url, latlon=latlon, bbox=gen_bbox(latlon), now=datetime.now().ctime(), validation=validation, api=api, data=content)
 
   return html.encode('utf-8')
 
