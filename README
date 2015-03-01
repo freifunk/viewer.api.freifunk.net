@@ -1,9 +1,14 @@
 Freifunk API Viewer
 ===================
 
-  $ git clone https://github.com/cholin/ff-api-viewer
-  $ cd ff-api-viewer
+  $ git clone https://github.com/freifunk/viewer.api.freifunk.net
+  $ cd viewer.api.freifunk.net
+  $ git clone http://github.com/freifunk/api.freifunk.net
   $ python2 render.py [build_dir]
   $ firefox build/index.html
 
-Live: http://cholin.spline.de/freifunk/api-viewer
+Todo:
+* add check for last update
+* do git pull on execution for 
+
+Live: http://api-viewer.freifunk.net
