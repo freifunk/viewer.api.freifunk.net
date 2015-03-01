@@ -7,6 +7,7 @@ import shutil
 import sys
 import urllib2
 import jsonschema
+from distutils2.version import NormalizedVersion
 from jinja2 import Environment, FileSystemLoader
 from jinja2.utils import urlize
 from datetime import datetime
@@ -87,6 +88,15 @@ def validate_community(specs, instance):
       text_result = '%s</ul>' % (text_result)
       status = 'invalid'
       status_text = 'Invalid'
+    elif NormalizedVersion(instance['api']) < NormalizedVersion('0.4.0'):
+      status = 'warning'
+      status_text = 'Warning'
+      text_result = 'API version too old! You should upgrade your file'
+    # TODO: Check lastchange date
+    #elif instance['lastchange']:
+    #  status = 'warning'
+    #  status_text = 'Warning'
+    #  text_result = 'No Update on API file for more than 2 month!'
     else:
       status = 'valid'
       status_text = 'Valid'
