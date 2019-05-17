@@ -7,7 +7,7 @@ import shutil
 import sys
 import urllib2
 import jsonschema
-from distutils2.version import NormalizedVersion
+from packaging import version
 from jinja2 import Environment, FileSystemLoader
 from jinja2.utils import urlize
 from datetime import datetime
@@ -88,7 +88,7 @@ def validate_community(specs, instance):
       text_result = '%s</ul>' % (text_result)
       status = 'invalid'
       status_text = 'Invalid'
-    elif NormalizedVersion(instance['api']) < NormalizedVersion('0.4.0'):
+    elif version.parse(instance['api']) < version.parse('0.4.0'):
       status = 'warning'
       status_text = 'Warning'
       text_result = 'API version too old! You should upgrade your file'
@@ -107,7 +107,7 @@ def validate_community(specs, instance):
     return validation_result
 
   except KeyError as e:
-    print('Invalid or unknown API version %s: %s' % (api_content['api'], url))
+    print('Invalid or unknown API version %s: %s' % (instance['api'], url))
 
 def render_index(template_path, communities):
   template = env.get_template(template_path)
@@ -138,8 +138,7 @@ def walk(node):
 
 
 if __name__ == "__main__":
-  build_dir = 'build'
-
+  build_dir = '/var/www/vhosts/api-viewer.freifunk.net/httpdocs/'
   if len(sys.argv) > 1:
     build_dir = sys.argv[1]
 
@@ -156,7 +155,7 @@ if __name__ == "__main__":
 
   # communities
   try:
-    url = 'http://freifunk.net/map/ffSummarizedDir.json'
+    url = 'http://api.freifunk.net/data/ffSummarizedDir.json'
     req = urllib2.urlopen(url)
     communities = json.load(req)
   except urllib2.HTTPError:
