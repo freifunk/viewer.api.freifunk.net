@@ -1,10 +1,10 @@
 # Freifunk API Viewer
-===================
+
 ## Setup
-  $ git clone https://github.com/freifunk/viewer.api.freifunk.net
-  $ pip3 install -r requirements.txt
-  $ python3 render.py [build_dir]
-  $ firefox build/index.html
+  * `git clone https://github.com/freifunk/viewer.api.freifunk.net`
+  * `pip3 install -r requirements.txt`
+  * `python3 render.py [build_dir]`
+  * `firefox build/index.html`
 
 ## Todo:
 * add check for last update
