@@ -10,7 +10,7 @@
       <iframe width="700px" height="350px" src="//api.freifunk.net/map/map.html"></iframe>
     </div>
 
-    <table class="sortable">
+    <table id="communities" class="sortable">
       <tr>
         <th>Region<span id="sorttable_sortfwdind">&nbsp;▾</span></th>
         <th>Website</th>
@@ -92,4 +92,10 @@
     {% endfor %}
     </table>
   </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('#communities').DataTable();
+} );
+  </script>
 {% endblock %}
