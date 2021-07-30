@@ -8,7 +8,6 @@ from zipfile import ZipFile
 import glob
 import json
 from pathlib import Path
-import progressbar
 import jsonschema
 from packaging import version
 from datetime import datetime
@@ -110,7 +109,7 @@ def validate_community(specs, instance):
 ##To remove the temp files generated while building
 def removeTempFile(_zip, extracted, build = 0):
   try:
-    print("[*] Removing temp files....", end = "")
+    print("\t[*] Removing temp files....", end = "")
     if build:
       shutil.rmtree(build)
     os.remove(_zip)
@@ -175,24 +174,20 @@ def main():
   entries = {}
   rendered = {}
 
-  print("\t[*] Rendering communities.....")
-  bar = progressbar.ProgressBar(max_value=len(communities))
-  count = 0
+  print("\t[*] Rendering communities.....", end = "")
   for name, data in communities.items():
     path = os.path.join(build_dir, "{}.html".format(name))
     data['validation'] = validate_community(ff_api_specs,data)
     with open(path, 'wb') as f: 
       f.write(render_community("community.html", data.copy()))
       rendered[name] = data
-    count+=1
-    bar.update(count)
-
+  print("Done!!")
   
-  print("\n\t[*] Rendering index page....", end = "")
+  print("\t[*] Rendering index page....", end = "")
   index = os.path.join(build_dir, "index.html")
   with open(index, "wb") as f:
     f.write(render_index("index.html", rendered))
-  print("Done !!")
+  print("Done!!")
 
   print("\t[*] Copying static files.....", end = "")
   static_files = os.listdir('static')
