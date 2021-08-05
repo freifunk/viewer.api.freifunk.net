@@ -81,11 +81,15 @@ def validate_community(specs, instance):
     print("[+] Invalid or unknown API version {}: {}".format(instance['api'], instance['url']))
     return
 
-  validation = jsonschema.Draft7Validator(specs[instance['api']]['schema'])
+  try:
+    del instance["mtime"]
+  except Exception as e:
+    pass
+
+  validation = jsonschema.Draft7Validator(specs[instance['api']])
   errors = sorted(validation.iter_errors(instance), key = str)
 
   validation_result = {}
-  
   if errors:
     status = "invalid"
     status_text = "Invalid"
