@@ -55,7 +55,6 @@ def walk(node):
 
 def render_community(template_path, data):
   
-  # d = datetime.fromtimestamp(float(data['state']['lastchange']))
   try:
     data['state']['lastchange'] = dateutil.parser.parse(data['state']['lastchange'], tzinfos=tzoffset(None, 18000)) 
   except:
@@ -181,7 +180,7 @@ def main():
   print("\t[*] Rendering communities.....", end = "")
   for name, data in communities.items():
     path = os.path.join(build_dir, "{}.html".format(name))
-    data['validation'] = validate_community(ff_api_specs,data)
+    data['validation'] = validate_community(ff_api_specs,data.copy())
     with open(path, 'wb') as f: 
       f.write(render_community("community.html", data.copy()))
       rendered[name] = data
