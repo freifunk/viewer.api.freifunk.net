@@ -95,7 +95,9 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-    $('#communities').DataTable();
+    $('#communities').DataTable({
+      "pageLength": 50
+    });
 } );
   </script>
 {% endblock %}
