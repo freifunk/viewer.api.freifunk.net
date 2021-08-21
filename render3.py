@@ -85,6 +85,16 @@ def validate_community(specs, instance):
   except Exception as e:
     pass
 
+  try:
+    del instance["etime"]
+  except Exception as e:
+    pass
+  
+  try:
+    del instance["error"]
+  except Exception as e:
+    pass
+
   validation = jsonschema.Draft7Validator(specs[instance['api']])
   errors = sorted(validation.iter_errors(instance), key = str)
 
