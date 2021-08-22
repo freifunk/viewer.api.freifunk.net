@@ -14,6 +14,7 @@ from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 from jinja2.utils import urlize
 import dateutil.parser
+from copy import copy, deepcopy
 
 env = Environment(loader=FileSystemLoader('templates'))
 
@@ -94,6 +95,16 @@ def validate_community(specs, instance):
     del instance["error"]
   except Exception as e:
     pass
+
+  if instance['api'] == "0.5.0":
+    try:
+      del instance['location']['lat']
+      del instance['location']['lon']
+      for num, _ in enumerate(instance['location']['additionalLocations']):
+          del instance['location']['additionalLocations'][num]['lat']
+          del instance['location']['additionalLocations'][num]['lon']
+    except Exception as e:
+      pass
 
   validation = jsonschema.Draft7Validator(specs[instance['api']])
   errors = sorted(validation.iter_errors(instance), key = str)
@@ -190,9 +201,9 @@ def main():
   print("\t[*] Rendering communities.....", end = "")
   for name, data in communities.items():
     path = os.path.join(build_dir, "{}.html".format(name))
-    data['validation'] = validate_community(ff_api_specs,data.copy())
+    data['validation'] = validate_community(ff_api_specs,deepcopy(data))
     with open(path, 'wb') as f: 
-      f.write(render_community("community.html", data.copy()))
+      f.write(render_community("community.html", deepcopy(data)))
       rendered[name] = data
   print("Done!!")
   
