@@ -96,7 +96,7 @@ def validate_community(specs, instance):
   except Exception as e:
     pass
 
-  if instance['api'] == "0.5.0":
+  if instance['api'].startsWith("0.5."):
     try:
       del instance['location']['lat']
       del instance['location']['lon']
