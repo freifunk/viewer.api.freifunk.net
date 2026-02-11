@@ -3,7 +3,7 @@
 ## Setup
   * `git clone https://github.com/freifunk/viewer.api.freifunk.net`
   * `pip3 install -r requirements.txt`
-  * `python3 render.py [build_dir]`
+  * `python3 render3.py build`
   * `firefox build/index.html`
 
 ## Todo:
